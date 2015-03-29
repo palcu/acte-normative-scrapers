@@ -2,6 +2,7 @@ import json
 import requests
 from bs4 import BeautifulSoup
 
+
 def get_content(url):
     content = []
     response = requests.get(url)
@@ -10,20 +11,11 @@ def get_content(url):
     paragraphs = soup.find(class_='col-content').find_all('p')
     for paragraph in paragraphs:
         for link in paragraph.find_all('a'):
-            url = link.get('href')
-            content_type = 'other'
-
-            if '.pdf' in url:
-                content_type = 'pdf'
-            elif '.doc' in url:
-                content_type = 'doc'
-
             content.append({
-                'value': url,
-                'type': content_type
+                'value': link.get('href'),
+                'type': 'uri'
             })
     return content
-
 
 
 def scrape_website(html):
