@@ -39,9 +39,10 @@ def main():
     if response.status_code != 200:
         print("Could not get the page {0}".format(url))
         exit(1)
-    json_data = scrape_website(response.content)
+    json_data = json.dumps(scrape_website(response.content), indent=4)
+    requests.post('http://acte-normative.riker.grep.ro/receive_bills', data=json_data)
     with open('output_ancom.json', 'w') as stream:
-        stream.write(json.dumps(json_data, indent=4))
+        stream.write(json_data)
 
 
 if __name__ == "__main__":
