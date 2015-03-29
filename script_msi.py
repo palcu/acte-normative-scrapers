@@ -41,8 +41,7 @@ def main():
         print("Could not get the page {0}".format(url))
         exit(1)
     json_data = json.dumps(scrape_website(response.content), indent=4)
-    import ipdb; ipdb.set_trace()
-    requests.post('http://localhost:8000/receive_bills/', data=json_data)
+    requests.post('http://acte-normative.riker.grep.ro/receive_bills', data=json_data)
     with open('output_msi.json', 'w') as stream:
         stream.write(json_data)
 
